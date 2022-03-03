@@ -2,6 +2,7 @@ import argparse
 import numpy as np
 import cupy as cp
 import torch
+import tensorflow as tf
 from scipy.spatial.distance import cdist
 import ot
 import ot.gpu
@@ -15,10 +16,10 @@ def mnist_data_prep(n=1000, seed = 0, eps=1):
     if os.path.exists('./mnist.npy'):
         mnist = np.load('./mnist.npy') # 60k x 28 x 28
         mnist_labels = np.load('./mnist_labels.npy').ravel().astype(int) # 60k x 1 # originally UINT8
-    # else:
-    #     (mnist, mnist_labels), (_, _) = tf.keras.datasets.mnist.load_data()
-    #     np.save('mnist.npy', mnist)
-    #     np.save('mnist_labels.npy', mnist_labels)
+    else:
+        (mnist, mnist_labels), (_, _) = tf.keras.datasets.mnist.load_data()
+        np.save('mnist.npy', mnist)
+        np.save('mnist_labels.npy', mnist_labels)
 
     np.random.seed(seed)
     k = 1 - eps # rate of inlier (eps : outlier)
