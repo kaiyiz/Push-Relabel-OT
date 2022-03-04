@@ -1,3 +1,8 @@
+"""
+This is a script that conducts the experiments shown in our paper. 
+CPU and GPU based implementation are compared with corresponding sinkorn methods with sunthetic random data.
+"""
+
 import argparse
 import numpy as np
 import cupy as cp
@@ -38,7 +43,6 @@ def get_sinkorn_reg(a, b, cost, target_loss, d = 1e-2):
     reg_mid = (reg_lt+reg_rt)/2
     while(True):
         G = ot.sinkhorn(cp.array(a), cp.array(b), cp.array(cost), reg_mid, method='sinkhorn', numItermax=100000000)
-        # cur_loss = ot.sinkhorn2(cp.array(a), cp.array(b), cp.array(cost), reg_mid, method='sinkhorn', numItermax=100000000)
         cur_loss = np.sum(G.get()*cost)
         d_loss = cur_loss - target_loss
         if(np.absolute(d_loss)<=d):
@@ -83,10 +87,6 @@ pl_gpu_torch_time = []
 pl_gpu_torch_iter = []
 pl_gpu_torch_loss = []
 
-pl_gpu_time = []
-pl_gpu_iter = []
-pl_gpu_loss = []
-
 for i in range(NUM_EXPERIMENTS):
     a, b, cost = rand_points(n, i)
     a = np.ones(n)/n
@@ -127,8 +127,6 @@ for i in range(NUM_EXPERIMENTS):
         delta_tensor = torch.tensor([delta], device=device, requires_grad=False)
         cost_cpu = cost.to(device2)
         start = time.time()
-        # Mb, yA, yB, ot_loss, iteration
-        # Mb, yA, yB, ot_pyt_loss, iteration = matching_torch_(cost, C, delta, device=device)
         Mb, yA, yB, ot_pyt_loss, iteration = matching_gpu(cost, cost_cpu, C, delta_tensor, device=device)
         torch.cuda.synchronize()
         end = time.time()

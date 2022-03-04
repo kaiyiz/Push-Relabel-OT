@@ -1,3 +1,8 @@
+"""
+This is a script that conducts the experiments shown in our paper. 
+CPU and GPU based implementation are compared with corresponding sinkorn methods with MNIST data
+"""
+
 import argparse
 import numpy as np
 import cupy as cp
@@ -14,7 +19,6 @@ from matching import matching_cpu, matching_gpu
 def mnist_data_prep(n=1000, seed = 0, eps=1):
     ############ Creating pure and contaminated mnist dataset ############
 
-    # KAIYI PATH : OT-profile/outlier_detection_robot_vs_gtot
     if os.path.exists('./mnist.npy'):
         mnist = np.load('./mnist.npy') # 60k x 28 x 28
         mnist_labels = np.load('./mnist_labels.npy').ravel().astype(int) # 60k x 1 # originally UINT8
@@ -26,16 +30,12 @@ def mnist_data_prep(n=1000, seed = 0, eps=1):
     np.random.seed(seed)
     k = 1 - eps # rate of inlier (eps : outlier)
 
-    # print(mnist_labels[:20])
-
     total = np.arange(len(mnist_labels))
     indx_a = total[mnist_labels < 5]
     indx_b = total[mnist_labels > 4]
 
     indx_a = np.random.permutation(indx_a)[:n]
     indx_b = np.random.permutation(indx_b)[:n]
-    # indx_a = np.random.permutation(total)[:n]
-    # indx_b = np.random.permutation(total)[:n]
 
     a  = mnist[indx_a, :, :]
     b  = mnist[indx_b, :, :]
@@ -103,10 +103,6 @@ sink_gpu_loss = []
 pl_gpu_torch_time = []
 pl_gpu_torch_iter = []
 pl_gpu_torch_loss = []
-
-pl_gpu_time = []
-pl_gpu_iter = []
-pl_gpu_loss = []
 
 for i in range(NUM_EXPERIMENTS):
     X, Y = mnist_data_prep(n, seed = i, eps=1)
