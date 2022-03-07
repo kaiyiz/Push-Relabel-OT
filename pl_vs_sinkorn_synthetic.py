@@ -21,6 +21,9 @@ def cost_prep(n = 100, seed = 0):
     return W
 
 def rand_points(n = 100, seed = 0):
+    """
+    This function creates synthetic experiment data by randomly generating points in a 2d unit square.
+    """
     np.random.seed(seed)
     a = np.random.rand(n,2)
     b = np.random.rand(n,2)
@@ -37,7 +40,10 @@ def computeDistanceMatrixGrid(n, dist):
     M = cdist(grid, grid, dist)
     return M
 
-def get_sinkorn_reg(a, b, cost, target_loss, d = 1e-2):
+def get_sinkorn_reg(a, b, cost, target_loss, d = 1e-6):
+    """
+    This function selects regularization parameter for sinkhorn algorithm using binary searching.
+    """
     reg_rt = 1
     reg_lt = 1e-5
     reg_mid = (reg_lt+reg_rt)/2

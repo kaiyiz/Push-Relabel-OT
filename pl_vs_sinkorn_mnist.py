@@ -17,8 +17,11 @@ from scipy.spatial.distance import cdist
 from matching import matching_cpu, matching_gpu
 
 def mnist_data_prep(n=1000, seed = 0, eps=1):
-    ############ Creating pure and contaminated mnist dataset ############
-
+    """
+    This function creates MNIST experiment dataset for a bipartite matching algorithm.
+    This function returns two arrays (A and B) of randomly selected MNIST images. 
+    Array A contains 0-4 MNIST digits, array B contains 5-9 MNIST digits.
+    """
     if os.path.exists('./mnist.npy'):
         mnist = np.load('./mnist.npy') # 60k x 28 x 28
         mnist_labels = np.load('./mnist_labels.npy').ravel().astype(int) # 60k x 1 # originally UINT8
@@ -53,7 +56,10 @@ def mnist_data_prep(n=1000, seed = 0, eps=1):
 def c_dist(b, a):
     return cdist(a, b, metric='minkowski', p=1)
 
-def get_sinkorn_reg(a, b, cost, target_loss, d = 1e-2):
+def get_sinkorn_reg(a, b, cost, target_loss, d = 1e-6):
+    """
+    This function selects regularization parameter for sinkhorn algorithm using binary searching.
+    """
     reg_rt = 1
     reg_lt = 1e-5
     reg_mid = (reg_lt+reg_rt)/2

@@ -24,7 +24,7 @@ def matching_cpu(W, C, delta):
     yB : ndarray
         A 1 by n array, each i represents the final dual value of ith type b vertex.
     total_cost : scalar
-        Total cost of the final matching
+        Total cost of the final matching.
     iteration : scalar
         The number of iterations ran in while loop when this function finishes
     """
@@ -122,9 +122,9 @@ def matching_gpu(W, W_cpu, C, delta, device):
     yB : tensor
         A 1 by n array, each i represents the final dual value of ith type b vertex.
     total_cost : tensor
-        The total cost of the final matching
+        The total cost of the final matching.
     iteration : tensor
-        The number of iterations ran in while loop when this function finishes
+        The number of iterations ran in while loop when this function finishes.
     """
     device2 = torch.device("cpu")
     dtyp = torch.int32
