@@ -1,8 +1,8 @@
 # Push-Relabel Based Additive Approximation for Optimal Transport Algorithm Implementation
 
-This repository contains the implementation and experiment code for the optimal transport described on [arXiv](). This is a joint work of the paper authors and [Abhijeet Phatak](https://github.com/abhijit-15).
+This repository contains the implementation and experiment code for the paper titled "A Push-Relabel Based Additive Approximation for Optimal Transport", which is available on [arXiv](). This paper introduces algorithms for the Optimal Transport (OT) problem and the assignment problem.
 
-Optimal Transport (OT) is a metric measuring the similarity between distributions. In discrete OT, we are given the point sets <img src="https://latex.codecogs.com/gif.latex?A" /> and <img src="https://latex.codecogs.com/gif.latex?B" />, which can be viewed as a unit amount of earth piled on a given metric space <img src="https://latex.codecogs.com/gif.latex?M" />. The metric is the minimum effort moving one pile to another, which is known as earth mover's distance(EMD). Now, this metric is popularly used in the machine learning community.
+Optimal Transport (OT) is a metric measuring the similarity between distributions. In discrete OT, we are given discrete probability distributions on point sets <img src="https://latex.codecogs.com/gif.latex?A" /> and <img src="https://latex.codecogs.com/gif.latex?B" />, each of size n. We are also given an n x n cost matrix W, where W(a,b) gives the cost of transporting one unit of mass from the point b in B to the point a in A. The OT distance is given by the minimum cost required to "move" the probability mass from points in B to the points in A. The OT distance is also known as the Earth Mover's Distance (EMD) as which can be viewed as the minimum amount of work required to transform one pile of Earth into another. OT has several applications in machine learning.
 
 Exact algorithms for computing OT can be slow, which has motivated the development of approximate numerical solvers (e.g. Sinkhorn method). We introduce a new and very simple combinatorial approach to find an <img src="https://latex.codecogs.com/gif.latex?\varepsilon" />-approximation of the OT distance. Our algorithm achieves a near-optimal execution time of <img src="https://latex.codecogs.com/gif.latex?O(n^2/\varepsilon^2)" /> for computing OT distance and, for the special case of the assignment problem, the execution time improves to <img src="https://latex.codecogs.com/gif.latex?O(n^2/\varepsilon)" />. Our algorithm is based on the push-relabel framework for min-cost flow problems.
 
@@ -10,9 +10,6 @@ So far, we have completed the implementation of the assignment algorithm. In thi
 
 The OT implementation is a work in progress.
 
-
-
-## Requirements
 This repository contains two parts: 
 
 1. Implementation of assignment algorithm: `matching.py`
@@ -22,7 +19,7 @@ This repository contains two parts:
 
 To use our algorithm or reproduce our experiments, simply install the following dependencies in your python environment and run the code.
 
-For the first part, our algorithm implmentaion requires:
+For the first part, our algorithm implementation requires:
 
 - [NumPy](https://numpy.org/install/) v1.21 
 - [PyTorch](https://pytorch.org/) v1.10
@@ -36,5 +33,5 @@ Reproducing our experiments requires:
 - [PyTorch](https://pytorch.org/) v1.10
 - [TensorFlow](https://www.tensorflow.org/install) v2.6
 
-
+We would like to thank [Abhijeet Phatak](https://github.com/abhijit-15) for sharing his knowledge about GPUs, which helped inform our GPU-based implementation.
 ## 
